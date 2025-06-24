@@ -63,7 +63,7 @@ docs/
 ## Quick Start
 
 ```bash
-git clone https://github.com/<username>/go-tinyurl.git
+git clone https://github.com/sharipovr/go-tinyurl.git
 cd go-tinyurl
 make dev            # spin up services + run migrations
 ```

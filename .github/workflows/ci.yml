@@ -1,0 +1,21 @@
+name: CI
+
+on: [push, pull_request]   # launch at every push или PR
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4  # clonning code
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Build (no-op)
+        run: echo "Build successful 🚀"
+
+      # ↓ later you add here `go vet`, `go test ./...` etc.
