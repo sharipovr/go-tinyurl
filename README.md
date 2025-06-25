@@ -67,7 +67,9 @@ git clone https://github.com/sharipovr/go-tinyurl.git
 cd go-tinyurl
 make dev            # spin up services + run migrations
 ```
-
+```bash
+[![CI](https://github.com/sharipovr/go-tinyurl/actions/workflows/ci.yml/badge.svg)](https://github.com/sharipovr/go-tinyurl/actions)
+```
 ## Roadmap
 
 - TBD
