@@ -1,27 +1,31 @@
-version: "3.9"
-
 services:
   db:
     image: postgres:16-alpine
     container_name: tinyurl-db
     environment:
-      POSTGRES_USER: tiny
-      POSTGRES_PASSWORD: tiny
-      POSTGRES_DB: tinyurl
+      POSTGRES_USER: tinyurl_admin        # ← new user
+      POSTGRES_PASSWORD: tiny-tini-123    # ← new password
+      POSTGRES_DB: tinyurl_db             # ← new database
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tinyurl_admin -d tinyurl_db"]
+      interval: 5s
+      retries: 5  
 
   migrate:
-    image: migrate/migrate:v4.17
+    image: migrate/migrate:latest         # ← always pull the latest tag
+    # platform: linux/amd64                # Apple Silicon: force amd64 layer
     depends_on:
-      - db
+      db:
+        condition: service_healthy        # wait for DB to be ready
     volumes:
       - ./migrations:/migrations
     entrypoint: >
       migrate -path /migrations
-              -database postgres://tiny:tiny@db:5432/tinyurl?sslmode=disable
+              -database 'postgres://tinyurl_admin:tiny-tini-123@db:5432/tinyurl_db?sslmode=disable'
               up
     restart: "no"
 
